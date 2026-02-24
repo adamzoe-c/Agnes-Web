@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coats | Agnes Nordenholz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfbf9;
+            --text-main: #1a1a1a;
+            --text-light: #666666;
+            --border-color: #e5e5e5;
+        }
+        body { margin: 0; padding: 0; background-color: #fff; color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.8; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- Sidebar --- */
+        .sidebar { height: 100%; width: 0; position: fixed; z-index: 3000; top: 0; left: 0; background-color: #fff; overflow-x: hidden; transition: 0.4s; padding-top: 70px; border-right: 1px solid var(--border-color); }
+        .sidebar a { padding: 10px 32px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 300; display: block; }
+        .sidebar .sub-link { padding-left: 50px; font-size: 10px; color: var(--text-light); text-transform: none; letter-spacing: 1px; }
+        .sidebar .closebtn { position: absolute; top: 15px; right: 25px; font-size: 32px; cursor: pointer; }
+        .menu-category { margin-top: 15px; margin-bottom: 5px; }
+        .sidebar-extra { margin-top: 25px; padding-top: 15px; border-top: 1px solid #f0f0f0; }
+
+        /* --- Header --- */
+        header { position: sticky; top: 0; z-index: 2000; background: #fff; border-bottom: 1px solid var(--border-color); padding: 20px 5%; display: flex; align-items: center; justify-content: center; }
+        .menu-icon { position: absolute; left: 5%; font-size: 20px; cursor: pointer; }
+        .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 24px; text-transform: uppercase; letter-spacing: 5px; font-weight: 400; text-align: center; margin: 0; padding-left: 20px; }
+
+        /* --- Shop Content --- */
+        .shop-container { max-width: 1200px; margin: 60px auto; padding: 0 5%; }
+        .category-title { text-align: center; margin-bottom: 60px; }
+        .category-title h1 { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; }
+
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); 
+            gap: 120px 60px; 
+            justify-content: center;
+        }
+
+        /* --- Slider System --- */
+        .slider-container { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #f9f9f9; }
+        .slider-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); height: 100%; cursor: zoom-in; }
+        .slider-track img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
+        
+        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.7); border: none; width: 40px; height: 40px; cursor: pointer; z-index: 20; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+        .prev-arrow { left: 10px; }
+        .next-arrow { right: 10px; }
+
+        .slider-dots { position: absolute; bottom: 15px; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; }
+        .dot { width: 5px; height: 5px; background: rgba(0,0,0,0.2); border-radius: 50%; cursor: pointer; }
+        .dot.active { background: #000; }
+
+        /* --- Product Info --- */
+        .product-info { margin-top: 25px; text-align: left; } 
+        .product-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; letter-spacing: 1px; margin-bottom: 5px; text-transform: uppercase; }
+.product-price { font-size: 17px; font-weight: 400; margin-bottom: 15px; }
+        .product-details { font-size: 13px; color: var(--text-light); margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .product-description { font-size: 12.5px; line-height: 1.8; color: #444; margin-bottom: 30px; } 
+        
+        .add-to-cart-btn { background: #000; color: #fff; border: none; padding: 18px; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; width: 100%; transition: 0.3s; display: block; text-align: center; }
+        .meta-data { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-top: 15px; border-top: 1px solid #f0f0f0; padding-top: 15px; line-height: 1.8; }
+
+        /* --- BRAND STORY SECTION --- */
+        .coats-story-section { max-width: 860px; margin: 60px 0 100px 0; text-align: left; border-top: 1px solid var(--border-color); padding-top: 60px; }
+        .coats-story-section h3 { font-family: 'Playfair Display', serif; font-size: 16px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; font-weight: 400; }
+        .coats-story-section p { font-size: 12.5px; line-height: 2; color: #555; }
+
+        /* --- FULL PREVIEW LIGHTBOX --- */
+        #lightbox { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: #fff; align-items: center; justify-content: center; }
+        #lightbox-img { max-height: 90vh; max-width: 90vw; object-fit: contain; }
+        .close-lb { position: absolute; top: 20px; right: 30px; font-size: 40px; cursor: pointer; }
+        .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 40px; cursor: pointer; padding: 20px; user-select: none; }
+        .lb-prev { left: 20px; }
+        .lb-next { right: 20px; }
+
+        /* --- Footer --- */
+        .site-footer { background-color: var(--bg-color); padding: 80px 10% 40px; border-top: 1px solid var(--border-color); margin-top: 100px; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-links-list { list-style: none; padding: 0; }
+        .footer-links-list li { margin-bottom: 15px; font-size: 14px; font-weight: 300; color: var(--text-light); }
+        .footer-socials { display: flex; justify-content: center; gap: 30px; margin: 40px 0; }
+        .footer-socials svg { width: 22px; height: 22px; fill: #1a1a1a; }
+        .copyright-final { text-align: center; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); }
+
+        @media (max-width: 1024px) { .product-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <span class="closebtn" onclick="closeNav()">×</span>
+        <a href="index.html">Home</a>
+        <a href="collections.html">Shop All</a>
+        <div class="menu-category">
+            <a href="#">Clothing</a>
+            <a href="jackets.html" class="sub-link">— Jackets</a>
+            <a href="pants.html" class="sub-link">— Trousers and Shorts</a>
+            <a href="tops.html" class="sub-link">— Tops</a>
+            <a href="dresses.html" class="sub-link">— Dresses</a>
+            <a href="accessories.html" class="sub-link">— Accessories</a>
+        </div>
+        <a href="bags.html">Bags</a>
+        <a href="interior.html">Interior</a>
+        <a href="jewellery.html">Jewellery</a>
+        <div class="menu-category"><a href="#">Custom Made</a><a href="process.html" class="sub-link">— The Process</a><a href="trunk-show.html" class="sub-link">— Trunk Show</a></div>
+        <a href="wedding.html">The Wedding Suit</a>
+        <div class="menu-category"><a href="#">Story</a><a href="about-agnes.html" class="sub-link">— About Agnes</a><a href="logo-story.html" class="sub-link">— Logo Story</a></div>
+<a href="journal.html">Journal</a>
+        <div class="sidebar-extra"><a href="newsletter.html">Newsletter</a><a href="contact.html">Contact Us</a><a href="cart.html">Shopping Bag</a></div>
+    </div>
+
+    <div id="lightbox">
+        <span class="close-lb" onclick="closeLB()">&times;</span>
+        <span class="lb-nav lb-prev" onclick="changeLB(-1)">&#10094;</span>
+        <img id="lightbox-img" src="">
+        <span class="lb-nav lb-next" onclick="changeLB(1)">&#10095;</span>
+    </div>
+
+    <header>
+        <span class="menu-icon" onclick="openNav()">☰</span>
+        <a href="index.html"><h1 class="logo-text">Agnes Nordenholz</h1></a>
+    </header>
+
+    <main class="shop-container">
+        <div class="category-title"><h1>Coats</h1></div>
+
+        <div class="product-grid">
+            
+            <div class="product-item" data-images='["c1.jpg","c2.jpg","c3.jpg","c4.jpg","c5.jpg"]'>
+                <div class="slider-container">
+                    <button class="nav-arrow prev-arrow">❮</button>
+                    <button class="nav-arrow next-arrow">❯</button>
+                    <div class="slider-track" onclick="openLB(0, this.closest('.product-item'))">
+                        <img src="c1.jpg"><img src="c2.jpg"><img src="c3.jpg"><img src="c4.jpg"><img src="c5.jpg">
+                    </div>
+                    <div class="slider-dots">
+                        <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">Mira DB Coat</h2>
+                    <div class="product-price">€ 2.200,00</div>
+                    <div class="product-details">
+                        Material: 100 % Cotton, Lining Bemberg<br>
+                        Size: Made To Measure<br>
+                        Full Canvas with hand finishing, Made in Italy
+                    </div>
+                    <div class="product-description">
+                        MIRA is first coat style from the Made To Measure line for women by Agnes Nordenholz. The coat has a tailored style with a fitted waist, high armholes and a rather small arm width. The length is mid-calf for an elongated, slim silhouette.<br><br>
+                        For the prototype we chose a green Corduroy. Further colors or different fabric options are available. You can choose from a wide range of fabric books from the best European mills.<br><br>
+                        The price is a starting point for an MTM coat. Please send an email or call to book an appointment.
+                    </div>
+                    <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
+                    <div class="meta-data">Categories: Clothing, Coats, Made To Measure | Tags: coat, MTM</div>
+                </div>
+            </div>
+
+            <div class="product-item" data-images='["c6.jpg","c7.jpg","c8.jpg","c9.jpg"]'>
+                <div class="slider-container">
+                    <button class="nav-arrow prev-arrow">❮</button>
+                    <button class="nav-arrow next-arrow">❯</button>
+                    <div class="slider-track" onclick="openLB(0, this.closest('.product-item'))">
+                        <img src="c6.jpg"><img src="c7.jpg"><img src="c8.jpg"><img src="c9.jpg">
+                    </div>
+                    <div class="slider-dots">
+                        <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">Mira DB Coat</h2>
+                    <div class="product-price">€ 2.600,00</div>
+<div class="product-details">
+                        Material: 100 % Wool, Lining Bemberg<br>
+                        Size: Made To Measure<br>
+                        Full Canvas with hand finishing, Made in Italy
+                    </div>
+                    <div class="product-description">
+                        MIRA is first coat style from the Made To Measure line by Agnes Nordenholz. The coat has a tailored style with a fitted waist, high armholes and a rather small arm width. The length is mid-calf for an elongated, slim silhouette.<br><br>
+                        For the prototype we chose a heavier traditional tweed from Johnston of Elgin / Scotland. For our Made To Measure service please make an appointment at the atelier in Berlin or send an email for our Trunk Show dates.
+                    </div>
+                    <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
+                    <div class="meta-data">Categories: Clothing, Coats, Made To Measure</div>
+                </div>
+            </div>
+
+            <div class="product-item" data-images='["c10.jpg","c11.jpg","c12.jpg","c13.jpg","c14.jpg"]'>
+                <div class="slider-container">
+                    <button class="nav-arrow prev-arrow">❮</button>
+                    <button class="nav-arrow next-arrow">❯</button>
+                    <div class="slider-track" onclick="openLB(0, this.closest('.product-item'))">
+                        <img src="c10.jpg"><img src="c11.jpg"><img src="c12.jpg"><img src="c13.jpg"><img src="c14.jpg">
+                    </div>
+                    <div class="slider-dots">
+                        <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">Trenchcoat</h2>
+                    <div class="product-price">€ 680,00</div>
+                    <div class="product-details">
+                        Material: 100% Wool, traditional Austrian Loden<br>
+                        Color: Dark Blue | Production: Germany
+                    </div>
+                    <div class="product-description">
+                        Trench coat is a mixture of a classic trench coat and a bomber jacket. Made of Austrian loden, it is a natural functional fabric with very good thermal insulation. Features 2 zippered pockets on the chest, 2 side pockets, and raw edges. Unlined for lightness. Length center back Size 36: 120 cm.<br><br>
+                        The product is made by order and will be shipped after 10-20 days. 1 in stock.
+                    </div>
+                    <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
+                    <div class="meta-data">SKU: A 01 | Categories: Clothing, Coats</div>
+                </div>
+            </div>
+
+        </div>
+
+        <section class="coats-story-section">
+            <h3>Coats–Made in Berlin</h3>
+            <p>Discover the epitome of warmth and style with our handcrafted coats, meticulously crafted by using premium, natural materials. Each coat embodies the essence of quality and tradition of tailoring. Elevate your winter wardrobe with a piece of Berlin’s heritage, where tradition meets modernity in every stitch.</p>
+        </section>
+    </main>
+<footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+<ul class="footer-links-list">
+                    <li><a href="collections.html">Our Collections</a></li>
+                    <li><a href="newsletter.html">Newsletter</a></li>
+                    <li><a href="journal.html">Journal</a></li>
+                    <li><a href="about-agnes.html">About us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <ul class="footer-links-list">
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal.html">Legal Notice</a></li>
+                    <li><a href="terms.html">AGB</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="centered-contact-area">
+            <div class="footer-socials">
+                <a href="https://www.instagram.com/agnesnordenholz_official" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="https://www.facebook.com/share/16u6X9MW3C/" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                </a>
+                <a href="https://www.tiktok.com/@agnesnordenholz_official" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.6-4.12-1.31a8.6 8.6 0 01-1.87-1.36v7.14c0 1.27-.3 2.52-.91 3.61a5.95 5.95 0 01-5.18 3.32c-1.07.05-2.15-.08-3.16-.46a5.94 5.94 0 01-3.61-4.19c-.31-1.04-.37-2.15-.15-3.2a5.94 5.94 0 014.28-4.52c.86-.25 1.76-.32 2.65-.21V12.7c-.45-.05-.9-.05-1.35 0-1.07.12-2.1.63-2.85 1.41a3.56 3.56 0 00-.91 3.38c.19 1.1.92 2.08 1.91 2.58a3.48 3.48 0 003.54-.31c.88-.63 1.39-1.66 1.39-2.74V.02z"/></svg>
+                </a>
+            </div>
+            </div>
+            <div class="copyright-final">@ AGNES NORDENHOLZ</div>
+        </div>
+    </footer>
+
+    <script>
+        function openNav() { document.getElementById("mySidebar").style.width = "320px"; }
+        function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+
+        let currentLBImages = [];
+        let currentLBIndex = 0;
+
+        function openLB(idx, productEl) {
+            currentLBImages = JSON.parse(productEl.dataset.images);
+            currentLBIndex = idx;
+            document.getElementById('lightbox-img').src = currentLBImages[currentLBIndex];
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+        function closeLB() { document.getElementById('lightbox').style.display = 'none'; }
+        function changeLB(dir) {
+            currentLBIndex = (currentLBIndex + dir + currentLBImages.length) % currentLBImages.length;
+            document.getElementById('lightbox-img').src = currentLBImages[currentLBIndex];
+        }
+
+        document.querySelectorAll('.slider-container').forEach(slider => {
+            let currentIdx = 0;
+            const track = slider.querySelector('.slider-track');
+            const dots = slider.querySelectorAll('.dot');
+            const prev = slider.querySelector('.prev-arrow');
+            const next = slider.querySelector('.next-arrow');
+            const productItem = slider.closest('.product-item');
+
+            const update = (idx) => {
+                track.style.transform = "translateX(-" + (idx * 100) + "%)";
+                dots.forEach(d => d.classList.remove('active'));
+                dots[idx].classList.add('active');
+                currentIdx = idx;
+            };
+
+            next.onclick = (e) => { e.stopPropagation(); update((currentIdx + 1) % dots.length); };
+            prev.onclick = (e) => { e.stopPropagation(); update((currentIdx - 1 + dots.length) % dots.length); };
+            dots.forEach((d, i) => d.onclick = (e) => { e.stopPropagation(); update(i); });
+            
+            // Allow click on images to open Lightbox at the CURRENT slider index
+            track.onclick = () => openLB(currentIdx, productItem);
+        });
+    </script>
+</body>
+</html>

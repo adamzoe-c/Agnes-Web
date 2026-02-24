@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Conversation with Anna Wendt | Agnes Nordenholz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfbf9;
+            --text-main: #1a1a1a;
+            --text-light: #666666;
+            --border-color: #e5e5e5;
+        }
+        body { margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.8; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- Sidebar --- */
+        .sidebar { height: 100%; width: 0; position: fixed; z-index: 5000; top: 0; left: 0; background-color: #fff; overflow-x: hidden; transition: 0.4s; padding-top: 70px; border-right: 1px solid var(--border-color); }
+        .sidebar a { padding: 10px 32px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 300; display: block; }
+        .sidebar .sub-link { padding-left: 50px; font-size: 10px; color: var(--text-light); text-transform: none; letter-spacing: 1px; }
+        .sidebar .closebtn { position: absolute; top: 15px; right: 25px; font-size: 32px; cursor: pointer; }
+        .menu-category { margin-top: 15px; margin-bottom: 5px; }
+        .sidebar-extra { margin-top: 25px; padding-top: 15px; border-top: 1px solid #f0f0f0; }
+
+        /* --- Header --- */
+        header.site-header { position: sticky; top: 0; z-index: 4000; background: #fff; border-bottom: 1px solid var(--border-color); padding: 20px 5%; display: flex; align-items: center; justify-content: center; }
+        .menu-icon { position: absolute; left: 5%; font-size: 20px; cursor: pointer; }
+        .header-logo { height: 55px; width: auto; }
+
+        /* --- Layout --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+        .article-intro { max-width: 950px; margin: 100px auto 60px; text-align: left; }
+        .date-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; display: block; }
+        .main-category { font-family: 'Playfair Display', serif; font-size: clamp(30px, 5vw, 48px); text-transform: uppercase; letter-spacing: 5px; margin-bottom: 10px; line-height: 1.1; }
+        .sub-story-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: 26px; color: var(--text-light); }
+        
+        .text-block { max-width: 800px; margin: 60px 0; }
+        .text-block p { font-size: 16px; color: var(--text-light); margin-bottom: 25px; line-height: 2.1; }
+        .footnote { font-size: 13px; color: #888; border-top: 1px solid var(--border-color); padding-top: 20px; margin-top: 40px; font-style: italic; line-height: 1.6; }
+
+        /* --- Scrollable Gallery with Arrow --- */
+        .gallery-container { position: relative; width: 100%; margin: 40px 0; }
+        .gallery-wrapper { display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 20px; padding-bottom: 15px; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .gallery-wrapper::-webkit-scrollbar { display: none; }
+        .gallery-item { flex: 0 0 85%; scroll-snap-align: center; cursor: zoom-in; }
+        .gallery-item img { width: 100%; height: auto; border: 1px solid var(--border-color); display: block; }
+        
+        .scroll-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: 1px solid var(--border-color); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 20px; transition: 0.3s; border-radius: 50%; }
+.scroll-arrow:hover { background: #fff; transform: translateY(-50%) scale(1.05); }
+
+        /* --- Mid-Content Images --- */
+        .image-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 60px 0; }
+        .image-pair img { width: 100%; height: auto; border: 1px solid var(--border-color); cursor: zoom-in; }
+        .full-img { width: 100%; margin: 60px 0; border: 1px solid var(--border-color); cursor: zoom-in; }
+        .full-img img { width: 100%; height: auto; display: block; }
+
+        /* --- Lightbox --- */
+        .lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); align-items: center; justify-content: center; cursor: zoom-out; }
+        .lightbox img { max-width: 90%; max-height: 90%; object-fit: contain; }
+
+        /* --- Footer --- */
+        .site-footer { background-color: var(--bg-color); padding: 80px 10% 40px; border-top: 1px solid var(--border-color); margin-top: 100px;}
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-links-list { list-style: none; padding: 0; margin: 0; }
+        .footer-links-list li { margin-bottom: 15px; font-size: 14px; font-weight: 300; display: flex; align-items: center; color: var(--text-light); }
+        .footer-links-list li::before { content: "›"; margin-right: 12px; font-size: 18px; color: var(--text-main); }
+        .centered-contact-area { text-align: center; margin: 60px auto 20px; }
+        .footer-socials { display: flex; justify-content: center; gap: 25px; margin-bottom: 40px; }
+        .footer-socials svg { width: 20px; height: 20px; fill: #1a1a1a; transition: 0.3s; }
+        .footer-socials a:hover svg { opacity: 0.6; }
+        .back-to-top { display: flex; justify-content: center; margin-bottom: 30px; }
+        .up-arrow { font-size: 20px; cursor: pointer; border: 1px solid var(--border-color); padding: 10px 15px; }
+        .copyright-final { text-align: center; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); }
+
+        @media (max-width: 768px) { .image-pair, .footer-grid { grid-template-columns: 1fr; } .scroll-arrow { display: none; } .gallery-item { flex: 0 0 90%; } }
+    </style>
+</head>
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <span class="closebtn" onclick="closeNav()">×</span>
+        <a href="index.html">Home</a>
+        <a href="collections.html">Shop All</a>
+        <div class="menu-category">
+            <a href="#">Clothing</a>
+            <a href="jackets.html" class="sub-link">— Jackets</a>
+            <a href="pants.html" class="sub-link">— Trousers and Shorts</a>
+            <a href="tops.html" class="sub-link">— Tops</a>
+            <a href="dresses.html" class="sub-link">— Dresses</a>
+            <a href="accessories.html" class="sub-link">— Accessories</a>
+        </div>
+        <a href="bags.html">Bags</a>
+        <a href="interior.html">Interior</a>
+        <a href="jewellery.html">Jewellery</a>
+        <div class="menu-category">
+            <a href="#">Custom Made</a>
+            <a href="measure.html" class="sub-link">— The Process</a>
+            <a href="trunk-show.html" class="sub-link">— Trunk Show</a>
+        </div>
+        <a href="wedding.html">The Wedding Suit</a>
+        <div class="menu-category">
+            <a href="#">Story</a>
+            <a href="about-agnes.html" class="sub-link">— About Agnes</a>
+            <a href="logo-story.html" class="sub-link">— Logo Story</a>
+        </div>
+        <a href="journal.html">Journal</a>
+        <div class="sidebar-extra">
+            <a href="newsletter.html">Newsletter</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="cart.html">Shopping Bag</a>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <span class="menu-icon" onclick="openNav()">☰</span>
+        <a href="index.html"><img src="logo.png" alt="Agnes Nordenholz" class="header-logo"></a>
+    </header>
+<main class="container">
+        <header class="article-intro">
+            <span class="date-label">2nd April 2021</span>
+            <h1 class="main-category">Anna Wendt</h1>
+            <div class="sub-story-title">A conversation with film producer Anna Wendt</div>
+        </header>
+
+        <div class="gallery-container">
+            <div class="gallery-wrapper" id="mainGallery">
+                <div class="gallery-item" onclick="openLightbox('anna1.jpg')"><img src="anna1.jpg" alt="Anna Wendt 1"></div>
+                <div class="gallery-item" onclick="openLightbox('anna2.jpg')"><img src="anna2.jpg" alt="Anna Wendt 2"></div>
+                <div class="gallery-item" onclick="openLightbox('anna3.jpg')"><img src="anna3.jpg" alt="Anna Wendt 3"></div>
+            </div>
+            <div class="scroll-arrow" onclick="scrollGallery()">⟶</div>
+        </div>
+
+        <section class="text-block">
+            <p><strong>Growing up in Berlin in the 80s, working in a male domain and an ambivalent feminism</strong></p>
+            <p>When I meet Anna for the first time, we immediately share a common concern for our mother, who is in need of care. At that time, we were both intensely busy organising care, confronted with dementia in all its facets, bureaucracy with health insurance companies and authorities, absurd everyday situations and an emotional exhaustion. We talk about responsibility and grief, feelings of guilt and the struggle not only for the mother, but also for their own existence.</p>
+            <p>Anna is a Berliner.</p>
+            <p>“I grew up in Berlin-Charlottenburg, right on Stuttgarter Platz. A place steeped in history: after the war, the black market flourished there, Herta Heuwer sold the first curry sausage around the corner, K1* moved in and took her famous nude photo, later there was a Baghwan Café. And, there was also the red light milieu with topless bars and brothels. Sexuality was lived very freely, anti-authoritarian upbringing was normal, so I didn’t exactly grow up protected.”</p>
+            <p>Born in 1975 in the former West Berlin, both parents are part of the anti-bourgeois movement, having fled to Berlin from the confines of their own families, the father having escaped from the army, they build their new, free life here. The parents separate when Anna is just 6 years old. From then on she lives with her mother, who, emancipated and self-confident, prefers to live alone rather than conform to a man.</p>
+            <p>As an adolescent, Anna experiences the ‘Lolita effect’ early on. The body changes, but Anna defines herself as a tom-boy and wants to live the freedom and informality of boys of the same age who get less attention. Anna’s appearance becomes supposedly important. She receives a lot of attention from men, which she does not feel up to.</p>
+            <p>“For me, sexuality was overwhelming from the beginning. Not yet knowing what ‘proper’ kissing is or not yet wanting to sleep with a boy was a reason to be considered weird back then. And early on, my playfulness, smiling or interested listening, was mistaken for flirting, affection and solicitation. Then when I stopped doing that, I was considered conceited and arrogant. It was exhausting.” Anna describes herself as chameleon-like, who could adapt to any situation and yet she desperately wanted to be different, just not “normal”.</p>
+            <p>“I tried in an uptight and weird way to fit in, but at the same time to be absolutely individual. As a child of separation, a ‘Berlin latchkey child’, I was alone a lot and had to grow up early.” It was only the MeToo movement that made her realise that what she too had to experience again and again was crossing boundaries. It is a long development until she can also define her own desires. The work with body therapist Susanne Kukies, spending time in nature, lots of exercise and creative balance: photography, writing, painting and goldsmithing all helped her. She sees herself as a father’s child in the past, misses him and oriented herself towards him.
+
+“Back then, in my eyes, he was the successful one, the provider, the one who made it.” She is always critical of her mother’s often too loud, too great approval and support, and longs for affirmation from her father, who is usually rather unimpressed. “The mother sees me as a genius, the father hardly noticed me.” It seems hard to find a balance. Anna wants to do everything perfectly, on the one hand to conform to her mother’s idea and on the other hand to be seen by her father. “My mother wanted to make me strong but I craved for comforting tenderness. For me as a teenager everything was so extremely black or white, no shades of grey. When I was 12, I was asked on a radio programme if I was into boys and what I wanted to be when I grew up. My answer: I definitely have to have a career because otherwise I’ll end up on the street or as a prostitute.” When she listens to the recording again as an adult, she becomes aware of the black-and-white thinking, the constant attempt to be perfect, the strictness towards herself. The death of her mother, the great loss and deep grief, open up new perspectives for her. She realises how important and strong her mother was as a woman and a wonderful role model, that she was the constant, albeit a very loud and colourful one, in Anna’s life.</p>
+            <p>“I wish I could have still told her that.”</p>
+        </section>
+
+        <div class="image-pair">
+            <img src="anna4.jpg" alt="Anna Wendt Portrait" onclick="openLightbox('anna4.jpg')">
+            <img src="anna5.jpg" alt="Anna Wendt Detail" onclick="openLightbox('anna5.jpg')">
+        </div>
+
+        <section class="text-block">
+            <p>The path to the film industry seems to have come in the cradle. Her mother works as a make-up artist for Sender Freies Berlin and takes her daughter with her on sets. The station becomes Anna’s second home and she watches the stars in make-up. Her father is first a cameraman, then he founds his own production company: “My father’s own company made a big impression on me as a child. His own shop, when he said: I’m going to the company. I thought that was cool.” After school, Anna is drawn in many different directions. She wants to do everything but follow in her parents’ footsteps. She is passionate about photography, art and classical singing. She finds diplomacy exciting – every few months a new idea excites her.</p>
+            <p>An agent wants to place her as an actress. She takes photos with Jim Rakete and is sent to auditions. “At that time, I didn’t have enough self-confidence for acting. That was misunderstood. My outward appearance and demeanour in private was in contrast to the auditions, I sat down, hands under my thighs and was completely paralysed.” Anna finds inspiration from her friends and often from musicians such as Patti Smith, who made a big impression on her with her ‘Advice to the Young’, Florence Welsh and most recently Billie Eilish. When Anna hears Ocean Eyes’ for the first time, she is captivated. “I searched the internet, watched all the interviews and documentaries about Billie Eilish. Something triggered her in me.”</p>
+            <p>It is this self-doubt and lostness that Anna recognises of herself as a young woman and the pain as an outsider to see how a person, with so much talent, can question herself so.</p>
+            <p>“There’s this Buddhist thought: everything you change in the here and now changes in your past as well as your future. When I look back at conflict now, with a new perspective that’s more reconciliatory, it takes a weight off my shoulders.” Anna works in various jobs, starts training in classical singing and finally gets a job in Cologne at Endemol via detours. The plan was for 3 months, but she stayed for 4 years. She took over as assistant recording manager for Notruf/Hans Meiser and after a short time had her own projects as recording manager and production manager. She is supported by her boss, Edda Kraft, who gives her freedom and recognises her performance.
+
+“The job itself, the organising, I found it totally stupid, but it came super easy to me. The exciting thing was the different locations, you meet people and places you would never have met or seen otherwise.” After 4 years, she gets a new boss who is authoritarian and constricts her. She realises at this point that she cannot be an ‘employee’, that she needs freedom. Anna leaves Endemol, applies to the “Hochschule für Film und Fernsehen – Konrad Wolf” in Potsdam-Babelsberg and in 2006, while still a student, founds one of the few film production companies in female ownership: Anna Wendt Filmproduktion. With her company she has since produced award-winning feature films and documentaries, most recently the ARD Degeto film ‘Karla, Rosalie und das Loch in der Wand’.</p>
+            <p>The film industry is still a male domain. Leading roles, direction, screenplay, production are predominantly in male hands. Female leads supposedly `don’t make money’, women are rather accessories to the hero, in 2014 only 15% of the funding in Germany goes to female filmmakers, Kathryn Bigelow is still the only female director to receive an Oscar. In 2014, 300 female directors launched the initiative Pro Quote Regie to demonstrate against the exclusion mechanisms in German production structures. “I never consciously felt disadvantaged as a woman, thought I could do anything if I just worked hard enough. And that’s what I did, or at least tried to do. In my immediate environment I was able to look over the shoulders of two very successful women, Sabine Christiansen and Regina Ziegler. “Still, it’s tough. The competition is fierce and financing projects is very challenging. But that’s just as true for my male colleagues.” Anna would like to see greater solidarity among women. She admits to herself that she herself has only produced 2 films with women directors and that it was mostly challenging interpersonally – but often also triggered by the external circumstances and lack of funds of the projects.</p>
+            <p>She herself has had the experience of being ridiculed and underestimated as a woman and has also had to put up with one or two defeats. She had to change her own ambitious goals when her son was born in 2011 and her mother became increasingly ill. She was sure that everything could just go on like this. “But it was not so easy. Suddenly there was this little person with his own needs – I couldn’t do that on the side. And then there was my mum, who needed me. At that time, I consciously wanted to work less and then the “on the side” gradually crept into my life. While my husband works and has his head free, I take care of our child, the flat, everyday life and also, on the side, my job. These are not the same conditions. Maybe there are also fewer women because they have too much else to do?”</p>
+            <p>Anna pauses.</p>
+            <p>“But the producer is alive, carrying on.” She laughs.</p>
+            <p>The director Maren Ade’s line comes to mind, “For my generation, it’s not cool to be a feminist.” Anna is cool. And for me, she is a feminist.</p>
+        </section>
+
+        <div class="full-img" onclick="openLightbox('anna6.jpg')">
+            <img src="anna6.jpg" alt="Anna Wendt Closure">
+        </div>
+
+        <div class="footnote">
+            <p>*Kommune 1 or K1 was the first well known german commune in the 1960s... [Footnote Text Continued]</p>
+            <p>Note: Regina Ziegler is a German film producer... [Note Text Continued]</p>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <ul class="footer-links-list">
+                    <li><a href="collections.html">Our Collections</a></li>
+                    <li><a href="newsletter.html">Newsletter</a></li>
+                    <li><a href="journal.html">Journal</a></li>
+                    <li><a href="about-agnes.html">About us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <ul class="footer-links-list">
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal.html">Legal Notice</a></li>
+                    <li><a href="agb.html">AGB</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="centered-contact-area">
+            <h4>Contact us</h4>
+            <div class="footer-socials">
+                <a href="https://www.instagram.com/agnesnordenholz_official" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645
+
+
+1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/share/16u6X9MW3C/" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                </a>
+                <a href="https://www.tiktok.com/@agnesnordenholz_official" target="_blank">
+                    <svg viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"/></svg>
+                </a>
+            </div>
+            <div class="back-to-top">
+                <span class="up-arrow" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</span>
+            </div>
+            <div class="copyright-final">@ AGNES NORDENHOLZ</div>
+        </div>
+    </footer>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="">
+    </div>
+
+    <script>
+        function openNav() { document.getElementById("mySidebar").style.width = "320px"; }
+        function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+        
+        function scrollGallery() {
+            const wrapper = document.getElementById('mainGallery');
+            const items = wrapper.querySelectorAll('.gallery-item');
+            const itemWidth = items[0].offsetWidth + 20;
+            wrapper.scrollBy({ left: itemWidth, behavior: 'smooth' });
+        }
+
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
