@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wedding: Laura | Agnes Nordenholz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfbf9;
+            --text-main: #1a1a1a;
+            --text-light: #666666;
+            --border-color: #e5e5e5;
+            --accent-tan: #f2f0eb;
+        }
+        body { margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.8; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- Sidebar --- */
+        .sidebar { height: 100%; width: 0; position: fixed; z-index: 5000; top: 0; left: 0; background-color: #fff; overflow-x: hidden; transition: 0.4s; padding-top: 70px; border-right: 1px solid var(--border-color); }
+        .sidebar a { padding: 10px 32px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 300; display: block; }
+        .sidebar .sub-link { padding-left: 50px; font-size: 10px; color: var(--text-light); text-transform: none; letter-spacing: 1px; }
+        .sidebar .closebtn { position: absolute; top: 15px; right: 25px; font-size: 32px; cursor: pointer; }
+        .menu-category { margin-top: 15px; margin-bottom: 5px; }
+        .sidebar-extra { margin-top: 25px; padding-top: 15px; border-top: 1px solid #f0f0f0; }
+
+        /* --- Header --- */
+        header.site-header { position: sticky; top: 0; z-index: 4000; background: #fff; border-bottom: 1px solid var(--border-color); padding: 20px 5%; display: flex; align-items: center; justify-content: center; }
+        .menu-icon { position: absolute; left: 5%; font-size: 20px; cursor: pointer; }
+        .header-logo { height: 55px; width: auto; }
+
+        /* --- Tiered Headline --- */
+        .article-intro { max-width: 900px; margin: 100px auto 60px; text-align: left; padding: 0 5%; }
+        .date-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; display: block; }
+        .main-category { font-family: 'Playfair Display', serif; font-size: clamp(34px, 6vw, 56px); text-transform: uppercase; letter-spacing: 5px; margin-bottom: 10px; line-height: 1; }
+        .sub-story-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: 30px; color: var(--text-light); }
+
+        /* --- Container --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+
+        /* --- Text Blocks --- */
+        .text-block { max-width: 800px; margin: 80px 0; text-align: left; }
+        .text-block p { font-size: 16px; color: var(--text-light); margin-bottom: 25px; line-height: 2.1; }
+        .detail-list { list-style: none; padding: 0; margin: 30px 0; border-left: 1px solid var(--border-color); padding-left: 30px; }
+        .detail-list li { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--text-main); margin-bottom: 10px; }
+
+        /* --- Image Layout Logic --- */
+        .img-horizontal { width: 100%; margin: 60px 0; border: 1px solid var(--border-color); }
+        .img-horizontal img { width: 100%; height: auto; display: block; }
+
+        .vertical-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 60px 0; }
+        .vertical-grid img { width: 100%; height: 800px; object-fit: cover; border: 1px solid var(--border-color); }
+
+        /* --- Feedback Section --- */
+        .feedback-section { background: var(--accent-tan); padding: 100px 10%; margin: 100px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+
+.feedback-content { max-width: 850px; margin: 0 auto; }
+        .feedback-content blockquote { font-family: 'Cormorant Garamond', serif; font-size: 26px; line-height: 1.7; color: var(--text-main); font-style: italic; margin: 0; }
+        .feedback-author { margin-top: 30px; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; }
+
+        /* --- Footer --- */
+        .site-footer { background-color: var(--bg-color); padding: 80px 10% 40px; border-top: 1px solid var(--border-color); margin-top: 100px; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-links-list { list-style: none; padding: 0; margin: 0; }
+        .footer-links-list li { margin-bottom: 15px; font-size: 14px; color: var(--text-light); }
+        .footer-socials { display: flex; justify-content: center; gap: 30px; margin: 40px 0; }
+        .footer-socials svg { width: 22px; height: 22px; fill: #1a1a1a; }
+        .copyright-final { text-align: center; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); }
+
+        @media (max-width: 768px) { 
+            .vertical-grid, .footer-grid { grid-template-columns: 1fr; } 
+            .vertical-grid img { height: 500px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <span class="closebtn" onclick="closeNav()">×</span>
+        <a href="index.html">Home</a>
+        <a href="collections.html">Shop All</a>
+        <div class="menu-category">
+            <a href="#">Clothing</a>
+            <a href="jackets.html" class="sub-link">— Jackets</a>
+            <a href="pants.html" class="sub-link">— Trousers and Shorts</a>
+            <a href="tops.html" class="sub-link">— Tops</a>
+            <a href="dresses.html" class="sub-link">— Dresses</a>
+            <a href="accessories.html" class="sub-link">— Accessories</a>
+        </div>
+        <a href="bags.html">Bags</a>
+        <a href="interior.html">Interior</a>
+        <a href="jewellery.html">Jewellery</a>
+        <div class="menu-category">
+            <a href="#">Custom Made</a>
+            <a href="measure.html" class="sub-link">— The Process</a>
+            <a href="trunk-show.html" class="sub-link">— Trunk Show</a>
+        </div>
+        <a href="wedding.html">The Wedding Suit</a>
+        <div class="menu-category">
+            <a href="#">Story</a>
+            <a href="about-agnes.html" class="sub-link">— About Agnes</a>
+            <a href="logo-story.html" class="sub-link">— Logo Story</a>
+        </div>
+        <a href="journal.html">Journal</a>
+        <div class="sidebar-extra">
+            <a href="newsletter.html">Newsletter</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="cart.html">Shopping Bag</a>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <span class="menu-icon" onclick="openNav()">☰</span>
+        <a href="index.html"><img src="logo.png" alt="Agnes Nordenholz" class="header-logo"></a>
+    </header>
+
+    <main class="container">
+        
+        <header class="article-intro">
+            <span class="date-label">4th February 2026</span>
+            <h1 class="main-category">The Wedding</h1>
+            <div class="sub-story-title">Bespoke Three-Piece Tuxedo for Women – A Wedding Suit by Agnes Nordenholz</div>
+        </header>
+
+        <div class="img-horizontal">
+            <img src="H1.jpg" alt="Laura's Bespoke Tuxedo">
+        </div>
+
+        <section class="text-block">
+            <p>Laura commissioned a bespoke three-piece tuxedo for women, designed as a timeless alternative to a traditional wedding dress. The ensemble consists of a double-breasted tuxedo jacket, a tailored waistcoat, and straight-leg trousers, all cut to precise measurements and crafted using classic tailoring techniques.</p>
+
+<p>For the civil wedding, we chose to reinterpret one of Laura’s existing tailored suits by adding a custom waistcoat in grey herringbone wool. The look was completed with a pleated tuxedo shirt, featuring traditional front pleats—an understated nod to formal eveningwear and sartorial heritage.</p>
+        </section>
+
+        <div class="vertical-grid">
+            <img src="H2.jpg" alt="Tailored Waistcoat Detail">
+            <img src="H3.jpg" alt="Civil Wedding Style">
+        </div>
+
+        <section class="text-block">
+            <p>The main wedding celebration with friends and family took place in Greece, inspiring a lighter and more luminous material choice. For this occasion, the tuxedo was crafted from a fine plain wool selected from the Classic British Formalwear collection by Dugdale Bros. The fabric is a refined 280-gram wool, chosen in a cream tone, offering elegance, breathability, and structure—ideal for a warm Mediterranean setting.</p>
+        </section>
+
+        <div class="vertical-grid">
+            <img src="H4.jpg" alt="Greece Celebration">
+            <img src="H5.jpg" alt="Cream Tuxedo Detail">
+        </div>
+
+        <section class="text-block">
+            <h3>Refined Details</h3>
+            <p>To complete the design, we incorporated classic tuxedo details that define formal tailoring at its highest level:</p>
+            <ul class="detail-list">
+                <li>A silk lapel on the jacket</li>
+                <li>Silk galon and a side stripe on the trousers</li>
+                <li>Traditional side adjusters instead of a belt</li>
+            </ul>
+            <p>These elements reference historical menswear tailoring while being reinterpreted for a modern, feminine silhouette. The result is a wedding tuxedo for women that balances precision, restraint, and individuality—crafted to endure beyond a single occasion.</p>
+        </section>
+
+        <div class="vertical-grid">
+            <img src="H6.jpg" alt="The Silhouette">
+            <img src="H7.jpg" alt="Sartorial Craft">
+        </div>
+
+        <section class="text-block">
+            <p>Each bespoke suit by Agnes Nordenholz is designed in Berlin and produced in close collaboration with specialized ateliers, emphasizing slow luxury, natural materials, and lasting craftsmanship. This tuxedo is not only a wedding garment, but a long-term wardrobe piece—intended to be worn, adapted, and lived in.</p>
+        </section>
+
+        <div class="vertical-grid">
+            <img src="H8.jpg" alt="Berlin Studio">
+            <img src="H9.jpg" alt="Artistry in Process">
+        </div>
+
+        <section class="feedback-section">
+            <div class="feedback-content">
+                <blockquote>
+                    “I had the pleasure of having Agnes create my wedding suit and an additional waistcoat for my special days. The garments were impeccably tailored, and the entire experience was exceptional from start to finish. Agnes guided me through every step of the process... Her beautiful studio in Berlin reflects the pride and care she brings to her craft.”
+                </blockquote>
+                <div class="feedback-author">— Laura</div>
+            </div>
+        </section>
+
+        <div class="vertical-grid" style="grid-template-columns: 1fr; max-width: 600px; margin: 0 auto 60px;">
+            <img src="H10.jpg" alt="Final Fitting">
+        </div>
+
+        <div class="img-horizontal">
+            <img src="H11.jpg" alt="Celebration Moment">
+        </div>
+
+        <div class="img-horizontal">
+            <img src="H12.jpg" alt="Laura and Molly">
+        </div>
+
+        <section class="text-block" style="text-align: center; max-width: 100%;">
+            <p style="font-family: 'Playfair Display', serif; font-size: 24px; color: #000; letter-spacing: 2px;">Thank you, Laura! Wishing you and Molly all the best.</p>
+        </section>
+
+    </main>
+<footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+<ul class="footer-links-list">
+                    <li><a href="collections.html">Our Collections</a></li>
+                    <li><a href="newsletter.html">Newsletter</a></li>
+                    <li><a href="journal.html">Journal</a></li>
+                    <li><a href="about-agnes.html">About us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <ul class="footer-links-list">
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal.html">Legal Notice</a></li>
+                    <li><a href="terms.html">AGB</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="centered-contact-area" style="text-align: center;">
+            <h4 style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin: 40px 0 20px; font-weight: 400; color: var(--text-light);">Contact us</h4>
+            <div class="footer-socials">
+                <a href="#"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+            </div>
+            <div class="copyright-final">@ AGNES NORDENHOLZ</div>
+        </div>
+    </footer>
+
+    <script>
+        function openNav() { document.getElementById("mySidebar").style.width = "320px"; }
+        function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+    </script>
+</body>
+</html>
