@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agnes Nordenholz | Slow Luxury</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-color: #fcfbf9;
+    --text-main: #1a1a1a;
+    --text-light: #666666;
+    --accent-tan: #f2f0eb;
+    --border-color: #e5e5e5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; transition: 0.3s; }
+
+  /* SIDEBAR */
+  .sidebar {
+    height: 100%; width: 0; position: fixed; top: 0; left: 0;
+    z-index: 3000; background: #fff; overflow-x: hidden;
+    transition: 0.4s; padding-top: 70px; border-right: 1px solid var(--border-color);
+  }
+  .sidebar a { padding: 10px 32px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 300; display: block; }
+  .sidebar .sub-link { padding-left: 50px; font-size: 10px; color: var(--text-light); text-transform: none; letter-spacing: 1px; }
+  .sidebar .closebtn { position: absolute; top: 15px; right: 25px; font-size: 32px; cursor: pointer; }
+  .menu-category { margin-top: 15px; margin-bottom: 5px; }
+  .sidebar-extra { margin-top: 25px; padding-top: 15px; border-top: 1px solid #f0f0f0; }
+  .sidebar-tools { padding: 10px 32px; display: flex; align-items: center; gap: 15px; font-size: 10px; letter-spacing: 1.5px; color: var(--text-light); }
+
+  /* HEADER */
+  header {
+    position: sticky; top: 0; z-index: 2000;
+    background: #fff; border-bottom: 1px solid var(--border-color);
+    padding: 20px 5%; display: flex; align-items: center; justify-content: center;
+  }
+  .menu-icon { position: absolute; left: 5%; font-size: 20px; cursor: pointer; }
+  .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 24px; letter-spacing: 5px; text-transform: uppercase; font-weight: 400; text-align: center; margin: 0; }
+
+  /* LIGHTBOX PREVIEW */
+  #lightbox {
+    display: none; position: fixed; z-index: 5000; left: 0; top: 0; width: 100%; height: 100%;
+    background: rgba(255,255,255,0.98); align-items: center; justify-content: center;
+  }
+  #lightbox-img { max-height: 85vh; max-width: 90vw; object-fit: contain; }
+  .lb-close { position: absolute; top: 20px; right: 30px; font-size: 40px; cursor: pointer; font-weight: 200; }
+  .lb-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 20px; transform: translateY(-50%); pointer-events: none; }
+  .lb-arrow { font-size: 40px; cursor: pointer; pointer-events: auto; padding: 20px; user-select: none; font-weight: 200; }
+
+  /* HERO */
+  .frame-section {
+    max-width: 1400px; margin: 70px auto; padding: 0 5%;
+    display: grid; grid-template-columns: 1fr 1.3fr; gap: 40px; align-items: center;
+  }
+  .frame-img { width: 100%; height: 520px; object-fit: cover; }
+  .floating-card {
+    background: var(--accent-tan); padding: 70px 50px; text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  }
+  .card-logo-top { height: 55px; margin-bottom: 25px; }
+  .floating-card h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 300; margin: 0 0 15px; }
+  .tagline { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); }
+
+  /* INTRO BLOCK */
+  .intro-block { max-width: 900px; margin: 120px auto 80px; padding: 0 5%; }
+  .brand-label { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; }
+.intro-text { margin: 30px 0; line-height: 1.9; font-size: 0.95rem; color: var(--text-light); }
+  .shop-link { font-size: 0.8rem; text-decoration: underline; text-underline-offset: 5px; display: inline-flex; align-items: center; gap: 5px; }
+  .shop-link svg { width: 12px; height: 12px; stroke-width: 2; stroke: var(--text-main); }
+
+  /* GALLERY (Mobile Swipe Enabled) */
+  .gallery-container { padding: 0 5%; margin: 80px 0; position: relative; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; }
+  .gallery-item img { width: 100%; height: 420px; object-fit: cover; transition: transform 0.4s ease; cursor: zoom-in; }
+  .gallery-item:hover img { transform: scale(1.05); }
+
+  /* JOURNAL SECTIONS */
+  .journal-section-wrapper { width: 100%; background: #fff; margin-bottom: 2px; }
+  .journal-content { display: grid; max-width: 1200px; margin: 0 auto; padding: 100px 5%; align-items: center; gap: 40px; }
+  .philosophy-layout { grid-template-columns: 0.8fr 1.2fr; }
+  .anna-layout { grid-template-columns: 1.2fr 0.8fr; }
+  .journal-text h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-style: italic; font-weight: 300; margin-bottom: 15px; }
+  .journal-text p { font-size: 0.85rem; line-height: 1.6; color: var(--text-light); margin-bottom: 20px; }
+  .journal-img { width: 100%; height: 320px; object-fit: cover; border: 10px solid var(--bg-color); box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+  .see-more { font-size: 0.8rem; text-decoration: underline; text-underline-offset: 4px; }
+
+  /* REVEAL ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+
+  /* FOOTER - THE CUSTOM LAYOUT */
+  .site-footer { background-color: var(--bg-color); padding: 80px 10% 40px; border-top: 1px solid var(--border-color); }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; }
+  .footer-links-list { list-style: none; padding: 0; margin: 0; }
+  .footer-links-list li { margin-bottom: 15px; font-size: 14px; font-weight: 300; display: flex; align-items: center; color: var(--text-light); }
+  .footer-links-list li::before { content: "›"; margin-right: 12px; font-size: 18px; color: var(--text-main); }
+  
+  /* CENTERED CONTACT (MOUSE POSITION) */
+  .centered-contact-area { text-align: center; margin: 60px auto 20px; }
+  .centered-contact-area h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-weight: 400; color: var(--text-light); }
+  .footer-socials { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; }
+  .footer-socials svg { width: 22px; height: 22px; fill: #1a1a1a; transition: 0.3s; }
+  .footer-socials a:hover svg { opacity: 0.5; }
+
+  .back-to-top { display: flex; justify-content: center; margin-bottom: 30px; }
+  .up-arrow { font-size: 20px; cursor: pointer; border: 1px solid var(--border-color); padding: 10px 15px; }
+
+  .copyright-final { text-align: center; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); }
+
+  @media (max-width: 1024px) {
+    .frame-section { grid-template-columns: 1fr; }
+    .journal-content { grid-template-columns: 1fr !important; text-align: center; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .logo-text { font-size: 18px; letter-spacing: 3px; }
+    .gallery-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .gallery-item { flex: 0 0 85%; margin-right: 15px; scroll-snap-align: center; }
+  }
+  .floating-cart {
+    position: fixed;
+    bottom: 30px; /* Space from bottom */
+    right: 30px;  /* Space from right */
+    width: 70px;  /* Size of the circle */
+    height: 70px;
+    background-color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5000; /* Keeps it above everything */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.floating-cart:hover {
+    transform: scale(1.1);
+}
+
+.floating-cart svg {
+    width: 28px;
+    height: 28px;
+}
+</style>
+</head>
+<body>
+
+<div id="mySidebar" class="sidebar">
+  <span class="closebtn" onclick="closeNav()">&times;</span>
+  <a href="index.html">Home</a>
+  <a href="collections.html">Shop All</a>
+<div class="menu-category">
+    <a href="#">Clothing</a>
+    <a href="jackets.html" class="sub-link">— Jackets</a>
+    <a href="pants.html" class="sub-link">— Trousers and Shorts</a>
+    <a href="tops.html" class="sub-link">— Tops</a>
+    <a href="dresses.html" class="sub-link">— Dresses</a>
+    <a href="accessories.html" class="sub-link">— Accessories</a>
+  </div>
+
+  <a href="bagstore.html">Bags</a>
+  <a href="interior.html">Interior</a>
+  <a href="jewellery.html">Jewellery</a>
+
+  <div class="menu-category">
+    <a href="#">Custom Made</a>
+    <a href="process.html" class="sub-link">— The Process</a>
+    <a href="trunk-show.html" class="sub-link">— Trunk Show</a>
+  </div>
+
+  <a href="wedding.html">The Wedding Suit</a>
+
+  <div class="menu-category">
+    <a href="#">Story</a>
+    <a href="about-agnes.html" class="sub-link">— About Agnes</a>
+    <a href="logo-story.html" class="sub-link">— Logo Story</a>
+  </div>
+
+  <div class="sidebar-extra">
+    <a href="newsletter.html">Newsletter</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="cart.html">Shopping Bag</a>
+    <div class="sidebar-tools">
+      <span>DE | EN</span>
+    </div>
+  </div>
+</div>
+<a href="cart.html" class="floating-cart">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
+</a>
+<header>
+  <span class="menu-icon" onclick="openNav()">☰</span>
+  <a href="index.html"><h1 class="logo-text">Agnes Nordenholz</h1></a>
+</header>
+
+<div id="lightbox">
+  <span class="lb-close" onclick="closeLightbox()">&times;</span>
+  <div class="lb-nav">
+    <div class="lb-arrow" onclick="changeImg(-1)">‹</div>
+    <div class="lb-arrow" onclick="changeImg(1)">›</div>
+  </div>
+  <img id="lightbox-img" src="" alt="Preview">
+</div>
+
+<section class="frame-section">
+  <div class="floating-card">
+    <img src="logo.png" class="card-logo-top" alt="Logo">
+    <h1>Agnes Nordenholz</h1>
+    <p class="tagline">Designed in Germany · Produced in Italy</p>
+  </div>
+  <img src="A9.jpg" class="frame-img" alt="Hero Image">
+</section>
+
+<section class="intro-block">
+  <span class="brand-label">Slow Luxury Atelier</span>
+  <p class="intro-text">
+    Defined by a deep respect for heritage and natural textures, Agnes Nordenholz crafts a narrative of slow luxury from Berlin — honoring artisanal processes and timeless design.
+  </p>
+  <a href="collections.html" class="shop-link">
+    AGNES NORDENHOLZ COLLECTIONS
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/>
+    </svg>
+  </a>
+</section>
+
+<div class="gallery-container">
+  <div class="gallery-grid" id="gallery">
+    <div class="gallery-item"><img src="A1.jpg" onclick="openLightbox(0)"></div>
+    <div class="gallery-item"><img src="A2.jpg" onclick="openLightbox(1)"></div>
+    <div class="gallery-item"><img src="A3.jpg" onclick="openLightbox(2)"></div>
+    <div class="gallery-item"><img src="A4.jpg" onclick="openLightbox(3)"></div>
+    <div class="gallery-item"><img src="A5.jpg" onclick="openLightbox(4)"></div>
+    <div class="gallery-item"><img src="A6.jpg" onclick="openLightbox(5)"></div>
+  </div>
+</div>
+
+<div class="journal-section-wrapper">
+  <section class="journal-content philosophy-layout reveal">
+    <img src="Philosophy-Image.jpg" class="journal-img" alt="Our Philosophy">
+    <div class="journal-text">
+      <h3>Our Philosophy</h3>
+      <p>Every piece blends timeless elegance with modern design. Heritage, skill, and slow luxury guide our creations.</p>
+      <a href="about-agnes.html" class="see-more">Read our story</a>
+    </div>
+  </section>
+</div>
+
+<div class="journal-section-wrapper">
+  <section class="journal-content anna-layout reveal">
+    <div class="journal-text">
+      <h3>A conversation with Anna Wendt</h3>
+      <p>Exploring care, responsibility, and creativity — a short reflection on meaningful work.</p>
+      <a href="journal.html" class="see-more">See more</a>
+    </div>
+    <img src="A10.jpg" class="journal-img" alt="Journal Image">
+  </section>
+</div>
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div class="footer-column">
+            <ul class="footer-links-list">
+                <li><a href="collections.html">Our Collections</a></li>
+                <li><a href="about-agnes.html">Newsletter</a></li>
+                <li><a href="journal.html">Journal</a></li>
+                <li><a href="about-agnes.html">About us</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <ul class="footer-links-list">
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="legal.html">Legal Notice</a></li>
+                <li><a href="terms.html">AGB</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="centered-contact-area">
+        <h4>Contact us</h4>
+        <div class="footer-socials">
+            <a href="#"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="#"><svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg></a>
+            <a href="#"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.6-4.12-1.31a8.6 8.6 0 01-1.87-1.36v7.14c0 1.27-.3 2.52-.91 3.61a5.95 5.95 0 01-5.18 3.32c-1.07.05-2.15-.08-3.16-.46a5.94 5.94 0 01-3.61-4.19c-.31-1.04-.37-2.15-.15-3.2a5.94 5.94 0 014.28-4.52c.86-.25 1.76-.32 2.65-.21V12.7c-.45-.05-.9-.05-1.35 0-1.07.12-2.1.63-2.85 1.41a3.56 3.56 0 00-.91 3.38c.19 1.1.92 2.08 1.91 2.58a3.48 3.48 0 003.54-.31c.88-.63 1.39-1.66 1.39-2.74V.02z"/></svg></a>
+        </div>
+
+        <div class="back-to-top">
+            <span class="up-arrow" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</span>
+        </div>
+
+        <div class="copyright-final">
+            @ AGNES NORDENHOLZ
+        </div>
+    </div>
+</footer>
+
+<script>
+let images = ["A1.jpg", "A2.jpg", "A3.jpg", "A4.jpg", "A5.jpg", "A6.jpg"];
+let currentIndex = 0;
+
+function openNav() { document.getElementById("mySidebar").style.width = "320px"; }
+function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+
+/* LIGHTBOX */
+function openLightbox(index) {
+  currentIndex = index;
+  document.getElementById("lightbox-img").src = images[currentIndex];
+  document.getElementById("lightbox").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  document.getElementById("lightbox").style.display = "none";
+document.body.style.overflow = "auto";
+}
+function changeImg(step) {
+  currentIndex += step;
+  if (currentIndex >= images.length) currentIndex = 0;
+  if (currentIndex < 0) currentIndex = images.length - 1;
+  document.getElementById("lightbox-img").src = images[currentIndex];
+}
+
+/* SWIPE FOR MOBILE */
+let touchstartX = 0;
+document.getElementById('lightbox').addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
+document.getElementById('lightbox').addEventListener('touchend', e => {
+  let touchendX = e.changedTouches[0].screenX;
+  if (touchendX < touchstartX - 50) changeImg(1);
+  if (touchendX > touchstartX + 50) changeImg(-1);
+});
+
+/* REVEAL */
+function reveal() {
+  var reveals = document.querySelectorAll(".reveal");
+  for (var i = 0; i < reveals.length; i++) {
+    var windowHeight = window.innerHeight;
+    var elementTop = reveals[i].getBoundingClientRect().top;
+    if (elementTop < windowHeight - 150) reveals[i].classList.add("active");
+  }
+}
+window.addEventListener("scroll", reveal);
+reveal();
+</script>
+</body>
+</html>
